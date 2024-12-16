@@ -1,0 +1,71 @@
+/* General Reset */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Main Layout */
+.map-page {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 300px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.clinic-list {
+    list-style: none;
+    padding: 0;
+}
+
+.clinic-list li {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.clinic-list button {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.clinic-list button:hover {
+    background-color: #0056b3;
+}
+
+/* Map Container */
+.map-container {
+    flex-grow: 1;
+    position: relative;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    border: 1px solid #ddd;
+}
