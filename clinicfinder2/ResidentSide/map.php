@@ -1,14 +1,19 @@
 <?php
-// Example clinic data (replace with database fetch)
-$clinics = [
-    ["name" => "Clinic A", "latitude" => 11.045, "longitude" => 124.004],
-    ["name" => "Clinic B", "latitude" => 11.048, "longitude" => 124.006],
-    ["name" => "Clinic C", "latitude" => 11.042, "longitude" => 124.008],
-];
+require_once '..\includes\database.php'; // Ensure the database connection file is included
 
-// Convert PHP array to JSON
-$clinicsJSON = json_encode($clinics);
+try {
+    // Fetch clinics data
+    $stmt = $pdo->prepare("SELECT clinic_id, name, latitude, longitude FROM clinics WHERE status = 'active'");
+    $stmt->execute();
+    $clinics = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Convert PHP array to JSON
+    $clinicsJSON = json_encode($clinics);
+} catch (PDOException $e) {
+    die("Error fetching clinics: " . $e->getMessage());
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,163 +21,41 @@ $clinicsJSON = json_encode($clinics);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Page</title>
+    <link rel="stylesheet" href="..\assets\css\map.css">
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" />
-
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1100;
-        }
-
-        .navbar .nav-links {
-            display: flex;
-            gap: 20px;
-        }
-
-        .navbar .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .navbar .nav-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* Hamburger Menu for Sidebar */
-        .menu-toggle {
-            background-color: #333;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 4px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .map-page {
-            display: flex;
-            height: 100vh;
-            margin-top: 50px; /* To account for the navbar */
-        }
-
-        /* Sidebar Styles */
-        .sidebar {
-            width: 300px;
-            height: 100%;
-            background-color: #fff;
-            position: fixed;
-            left: -300px; /* Hidden by default */
-            transition: left 0.3s ease-in-out;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .sidebar h2, .sidebar input, .sidebar ul {
-            margin: 10px 0;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar.active {
-            left: 0; /* Sidebar slides in */
-        }
-
-        /* Map Container */
-        .map-container {
-            flex: 1;
-            height: 100%;
-            position: relative;
-        }
-
-        #map {
-            height: 100%;
-            width: 100%;
-            z-index: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.min.js"></script>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <div class="menu-toggle" id="menuToggle">☰</div>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="#">Clinics</a>
-        </div>
-    </div>
-
-    <div class="map-page">
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <h2>Search Clinics</h2>
-            <input type="text" placeholder="Search by name or location..." class="search-bar">
-            <ul class="clinic-list">
-                <li>
-                    <h3>Clinic A</h3>
-                    <p>Address: Sample Street, Cebu</p>
-                    <button>View Details</button>
-                </li>
-                <li>
-                    <h3>Clinic B</h3>
-                    <p>Address: Another Street, Cebu</p>
-                    <button>View Details</button>
-                </li>
-                <li>
-                    <h3>Clinic C</h3>
-                    <p>Address: Example Avenue, Cebu</p>
-                    <button>View Details</button>
-                </li>
+<div class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <h2>ClinicFinder</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.php">Home</a></li>
+                <li><a href="map.php">Map Page</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
-        </div>
-
-        <!-- Map Section -->
-        <div class="map-container">
-            <div id="map"></div>
-        </div>
+        </nav>
+    </div>
+    <!-- Map Section -->
+    <div class="map-container">
+        <div id="map"></div>
     </div>
 
     <!-- Pass clinics data to JavaScript -->
     <script>
+        // Fetch the clinics data from PHP
         var clinics = <?php echo $clinicsJSON; ?>;
-
-        // Sidebar Toggle Functionality
-        const menuToggle = document.getElementById("menuToggle");
-        const sidebar = document.getElementById("sidebar");
-        menuToggle.addEventListener("click", function() {
-            sidebar.classList.toggle("active");
-        });
 
         // Initialize the map
         var map = L.map('map').setView([11.044526, 124.004376], 13); // Centered to Bogo City
@@ -202,12 +85,17 @@ $clinicsJSON = json_encode($clinics);
 
                     // Add markers for clinics
                     clinics.forEach(function (clinic) {
+                        var clinicId = clinic.clinic_id;
                         var clinicLat = clinic.latitude;
                         var clinicLon = clinic.longitude;
 
                         // Create a marker for each clinic
                         var clinicMarker = L.marker([clinicLat, clinicLon]).addTo(map)
-                            .bindPopup('<b>' + clinic.name + '</b><br>Lat: ' + clinicLat + ', Lon: ' + clinicLon);
+                            .bindPopup(
+                                '<b>' + clinic.name + '</b><br>' +
+                                'Lat: ' + clinicLat + ', Lon: ' + clinicLon + '<br>' +
+                                '<button onclick="visitClinic(' + clinicId + ')">Visit Clinic</button>'
+                            );
 
                         // Add click event to the clinic marker
                         clinicMarker.on('click', function () {
@@ -234,6 +122,11 @@ $clinicsJSON = json_encode($clinics);
             );
         } else {
             alert("Geolocation not supported by your browser.");
+        }
+
+        // JavaScript function to redirect to clinicspage.php with the clinic ID
+        function visitClinic(clinicId) {
+            window.location.href = 'clinicspage.php?id=' + clinicId;
         }
     </script>
 </body>

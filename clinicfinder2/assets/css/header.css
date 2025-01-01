@@ -1,0 +1,56 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* Navbar Styling */
+.navbar {
+    background-color: #163486; /* Background color */
+    padding: 10px 20px; /* Adjusted padding */
+    display: flex; /* Flex layout */
+    justify-content: space-between; /* Space between logo and nav-links */
+    align-items: center; /* Center align items */
+    color: white; /* White text color */
+    position: fixed; /* Fixed position for sticky effect */
+    top: 0; /* Stick to the top */
+    left: 0; /* Align to the left */
+    width: 100%; /* Full-width navbar */
+    z-index: 1000; /* Ensure it stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+    height: 68px; /* Consistent height */
+}
+
+.navbar .logo h2 {
+    margin: 0; /* Remove extra margin */
+}
+
+.navbar .nav-links {
+    list-style: none; /* Remove bullet points */
+    display: flex; /* Horizontal layout */
+    margin: 0; /* Remove default list margin */
+    padding: 0; /* Remove default list padding */
+}
+
+.navbar .nav-links li {
+    margin: 0 15px; /* Spacing between links */
+}
+
+.navbar .nav-links a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px; /* Font size */
+}
+
+.navbar .nav-links a:hover {
+    color: #ddd; /* Lighter color on hover */
+}
+
+/* To prevent content overlap */
+body {
+    margin: 0; /* Reset body margin */
+    padding: 0; /* Reset body padding */
+}
+
+/* Add margin-top to the content to prevent it from hiding behind the navbar */
+.content {
+    margin-top: 80px; /* Adjust according to the navbar height */
+    padding: 20px;
+}

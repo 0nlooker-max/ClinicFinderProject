@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Base CSS file -->
+    <link rel="stylesheet" href="../assets/css/header.css"> <!-- Base CSS file -->
     
     <!-- Include specific CSS file only if $specific_css is set -->
     <?php if (isset($specific_css) && !empty($specific_css)) : ?>
