@@ -38,50 +38,39 @@ try {
 </head>
 <body>
     <div class="contain">
-    <div class="header">
-        <nav class="navbar">
-            <div class="logo">
-                <h2>ClinicFinder</h2>
+        <div class="header">
+            <nav class="navbar">
+                <div class="logo">
+                    <h2>ClinicFinder</h2>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="map.php">Map Page</a></li>
+                    <li><a href="about.php">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="clinic-details">
+            <!-- Display the Clinic's Profile Picture -->
+            <div class="clinic-image">
+                <img src="clinic_image.php?id=<?php echo $clinicId; ?>" alt="Clinic Profile Picture">
             </div>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="map.php">Map Page</a></li>
-                <li><a href="about.php">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+            <h1><?php echo htmlspecialchars($clinic['name']); ?></h1>
+            <br>
+            <p><strong>Address:</strong> <?php echo htmlspecialchars($clinic['address']); ?></p>
+            <p><strong>Phone:</strong> <?php echo htmlspecialchars($clinic['contac_info']); ?></p>
+            <p><strong>Description:</strong> <?php echo htmlspecialchars($clinic['services']); ?></p>
+        </div>
+
+        <!-- Book Appointment -->
+        <div class="appointment-section">
+            <h2>Book an Appointment</h2>
+            <a href="book_appointment.php?id=<?php echo $clinicId; ?>" class="appointment-button">Book Appointment</a>
+        </div>
     </div>
 
-    <div class="clinic-details">
-        <h1><?php echo htmlspecialchars($clinic['name']); ?></h1>
-        <br>
-        <p><strong>Address:</strong> <?php echo htmlspecialchars($clinic['address']); ?></p>
-        <p><strong>Phone:</strong> <?php echo htmlspecialchars($clinic['contac_info']); ?></p>
-        <p><strong>Description:</strong> <?php echo htmlspecialchars($clinic['services']); ?></p>
-    </div>
-
-    <!-- Book Appointment -->
-    <div class="appointment-section">
-        <h2>Book an Appointment</h2>
-        <a href="book_appointment.php?id=<?php echo $clinicId; ?>" class="appointment-button">Book Appointment</a>
-    </div>
-
-    <!-- Rating Section -->
-    <div class="rating-section">
-        <h2>Rate This Clinic</h2>
-        <form action="submit_rating.php" method="POST">
-            <input type="hidden" name="clinic_id" value="<?php echo $clinicId; ?>">
-            <div class="rating-stars">
-                <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
-                <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
-                <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
-                <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
-                <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
-            </div>
-            <button type="submit" class="submit-rating">Submit Rating</button>
-        </form>
-    </div>
-    </div>
     <!-- Map Section -->
     <div class="map-section">
         <h2>Clinic Location</h2>

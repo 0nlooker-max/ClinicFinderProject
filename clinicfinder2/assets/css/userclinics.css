@@ -203,3 +203,11 @@ body {
     max-width: 800px;
     text-align: center;
 }
+.clinic-image img {
+    width: 150px; /* Adjust size */
+    height: 150px;
+    border-radius: 50%; /* Rounded profile */
+    border: 3px solid #4CAF50; /* Border color */
+    object-fit: cover; /* Maintain aspect ratio */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow */
+}
