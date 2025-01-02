@@ -6,6 +6,10 @@ body {
     color: #333;
     background-color: #f4f4f9; /* Soft background */
 }
+.contain{
+    background: url('images/bogoclinicallab.jpg')no-repeat center center/cover;
+    height: 800px;
+}
 
 /* Navbar Styling */
 .header {
@@ -65,6 +69,7 @@ body {
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: .9; /* Makes the entire section slightly transparent */
 }
 
 .clinic-details h1 {
@@ -75,10 +80,10 @@ body {
 }
 
 .clinic-details p {
-    font-size: 1rem;
+    font-size:20px;
     line-height: 1.6;
-    margin-bottom: 10px;
-    color: #555;
+    margin-bottom:5px;
+    color: #000000;
 }
 
 .clinic-details p strong {
@@ -125,6 +130,7 @@ body {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0.9;
     text-align: center;
 }
 
@@ -166,12 +172,14 @@ body {
 }
 
 .appointment-section {
+
     margin: 20px auto;
     padding: 20px;
     max-width: 800px;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    opacity: 0.9;
     text-align: center;
 }
 

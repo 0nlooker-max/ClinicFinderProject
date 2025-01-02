@@ -13,7 +13,8 @@ body {
 
 
 /* Search Section Styling */
-.search-section {
+.search-section {   
+    margin-top: 68px;
     background: url('images/search.jpg') no-repeat center center/cover;
     padding: 50px 0;
     text-align: center;

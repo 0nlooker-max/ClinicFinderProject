@@ -37,6 +37,7 @@ try {
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
+    <div class="contain">
     <div class="header">
         <nav class="navbar">
             <div class="logo">
@@ -80,7 +81,7 @@ try {
             <button type="submit" class="submit-rating">Submit Rating</button>
         </form>
     </div>
-
+    </div>
     <!-- Map Section -->
     <div class="map-section">
         <h2>Clinic Location</h2>
