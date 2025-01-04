@@ -1,8 +1,19 @@
+<?php
+require_once "..\includes\database.php";
+session_start();
+if (!isset($_SESSION['clinic_id'])) {
+    // Redirect to login or handle the error if the clinic_id is not found
+    header("Location: ../Login/login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="..\assets\css\clinicavailability.php">
     <title>Set Availability Schedule</title>
     <style>
         body {
@@ -48,7 +59,7 @@
             width: 250px;
             background-color: #0047AB;
             color: white;
-            height: 55rem;
+            height: 100%;
             padding: 20px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
@@ -157,13 +168,13 @@
             <a href="clinicprofile.php">Update Profile</a>
             <a href="#">Appointments</a>
             <a href="#">Manage Availability</a>
-            <a href="logout.php">Logout</a>
+            <a href="..\Login\logout.php">Logout</a>
         </div>
 
         <!-- Main Content -->
         <div class="profile-container">
             <h2>Set Availability Schedule</h2>
-            <form action="save_availability.php" method="POST">
+            <form action="backavailability.php" method="POST">
                 <!-- Day Selection -->
                 <label for="day">Day of the Week:</label>
                 <select id="day" name="day" required>
@@ -174,16 +185,8 @@
                     <option value="Friday">Friday</option>
                     <option value="Saturday">Saturday</option>
                 </select>
-
-                <!-- Morning Slot -->
-                <h3>Morning Slot</h3>
-                <label for="morning_slots">Number of Slots (08:00 - 12:00):</label>
-                <input type="number" id="morning_slots" name="morning_slots" min="20" max="50" required placeholder="Enter slots (20-50)">
-
-                <!-- Afternoon Slot -->
-                <h3>Afternoon Slot</h3>
-                <label for="afternoon_slots">Number of Slots (13:00 - 17:00):</label>
-                <input type="number" id="afternoon_slots" name="afternoon_slots" min="20" max="50" required placeholder="Enter slots (20-50)">
+                <label for="slots">Number of Slots:</label>
+                <input type="number" id="slots" name="slots" min="1" required>
 
                 <!-- Submit Button -->
                 <button type="submit">Save Schedule</button>
@@ -192,49 +195,45 @@
             <!-- Availability Table -->
             <h2>Availability Schedule</h2>
             <table>
-                <thead>
-                    <tr>
-                        <th>Day</th>
-                        <th>Morning Slots</th>
-                        <th>Afternoon Slots</th>
-                    </tr>
-                </thead>
-                <!-- Availability Table -->
-        <h2>Availability Schedule</h2>
-        <table>
-            <thead>
                 <tr>
-                    <th>Day</th>
-                    <th>Morning Slots</th>
-                    <th>Afternoon Slots</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
-        </thead>
-            <tbody>
+                <tbody>
                 <?php
-                // Include your database connection file
-                include '..\includes\database.php';
-
+                // Include database connection
+                include '../includes/database.php';
+                
                 try {
-                    // Fetch data from the availability table
-                    $stmt = $pdo->query("SELECT day, morning_slots, afternoon_slots FROM availability");
-
+                    // Fetch schedule data
+                    $stmt = $pdo->query("SELECT * FROM available_schedule WHERE clinic_id = {$_SESSION['clinic_id']} ORDER BY date, start_time");
+                
                     if ($stmt->rowCount() > 0) {
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['day']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['morning_slots']) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['afternoon_slots']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['date']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['start_time']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['end_time']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['slot_status']) . "</td>";
+                            echo "<td>
+                                    <a href='edit_schedule.php?schedule_id=" . $row['schedule_id'] . "'>Edit</a> |
+                                    <a href='delete_schedule.php?schedule_id=" . $row['schedule_id'] . "'>Delete</a>
+                                  </td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='3'>No availability set yet.</td></tr>";
+                        echo "<p>No schedules available.</p>";
                     }
                 } catch (PDOException $e) {
-                    echo "<tr><td colspan='3'>Error fetching data: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
+                    echo "Error: " . $e->getMessage();
                 }
                 ?>
-            </tbody>
-        </table>
+                
+                </tbody>
+            </table>
         </div>
     </div>
 
