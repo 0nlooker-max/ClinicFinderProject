@@ -153,7 +153,7 @@ if (!isset($_SESSION['clinic_id'])) {
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <h1>ClinicFinder</h1>
+        <h1>Clinic Management</h1>
         <div>
             <a href="dashboard.php">Home</a>
             <a href="#">Contact</a>
@@ -164,10 +164,10 @@ if (!isset($_SESSION['clinic_id'])) {
     <div class="container">
         <!-- Sidebar -->
         <div class="side-panel">
-            <h2>Navigation</h2>
+            <h2>Clinic Management</h2>
             <a href="clinicprofile.php">Update Profile</a>
-            <a href="#">Appointments</a>
-            <a href="#">Manage Availability</a>
+            <a href="apointment.php">Appointments</a>
+            <a href="availability.php">Manage Availability</a>
             <a href="..\Login\logout.php">Logout</a>
         </div>
 

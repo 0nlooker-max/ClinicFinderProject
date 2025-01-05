@@ -47,8 +47,8 @@ if (!$clinic) {
         <div class="side-panel">
             <h2>Clinic Management</h2>
             <a href="clinicprofile.php">Update Profile</a>
-            <a href="availability.php">Update Availability</a>
             <a href="apointment.php">Appointments</a>
+            <a href="availability.php">Manage Availability</a>
             <a href="..\Login\logout.php">Logout</a>
         </div>
 
