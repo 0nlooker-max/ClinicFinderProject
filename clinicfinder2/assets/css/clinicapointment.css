@@ -1,106 +1,123 @@
-/* book_appointment.css */
-
-/* General Styles */
+/* General Reset */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
+    line-height: 1.6;
 }
 
-/* Container for the entire page */
-.container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: #007bff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-}
-
-/* Header Section */
+/* Header Styles */
 h1 {
     text-align: center;
-    font-size: 2rem;
-    color: #4CAF50;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #4CAF50;
-    display: inline-block;
-    padding-bottom: 10px;
+    color: #007bff;
+    margin-top: 20px;
+    font-size: 32px;
 }
 
-/* Form Styles */
+/* Form Container */
 form {
-    margin: 20px 0;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* List of Schedules */
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 ul li {
-    margin-bottom: 15px;
-    padding: 15px;
-    background-color: #f3f3f3;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
-ul li label {
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    width: 100%;
+ul li:last-child {
+    border-bottom: none;
 }
 
-ul li input[type="radio"] {
+label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+}
+
+input[type="radio"] {
     margin-right: 10px;
-    accent-color: #4CAF50;
-    transform: scale(1.2);
+    accent-color: #007bff; /* Modern browsers will use this color for the radio button */
 }
 
-/* Submit Button */
-button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1rem;
+/* Button Styles */
+button {
+    display: block;
+    width: 100%;
     padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: #007bff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
     transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
 
-button[type="submit"]:hover {
-    background-color: #45a049;
+button:hover {
+    background-color: #0056b3;
 }
 
-/* No Schedules Message */
-.no-schedules {
+/* No Schedule Message */
+p {
     text-align: center;
-    font-size: 1.2rem;
-    color: #888;
-    margin: 20px 0;
+    color: #555;
+    font-size: 16px;
+}
+/* Style for the back button container */
+.backbtn {
+    text-align: center; /* Centers the button */
+    margin-top: 20px; /* Adds space above the button */
+}
+
+/* Style for the button */
+.backbtn .btn {
+    padding: 10px 20px; /* Adds padding to the button */
+    font-size: 16px; /* Sets the font size */
+    border-radius: 5px; /* Adds rounded corners */
+    text-decoration: none; /* Removes the underline from the link */
+    color: white; /* Sets the text color to white */
+    background-color: #28a745; /* Background color for the button */
+    border: none; /* Removes the border */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+/* Hover effect for the button */
+.backbtn .btn:hover {
+    background-color: #218838; /* Darkens the background color on hover */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .container {
-        margin: 20px;
+    h1 {
+        font-size: 24px;
+    }
+
+    form {
         padding: 15px;
     }
 
-    h1 {
-        font-size: 1.8rem;
+    label {
+        font-size: 14px;
     }
 
-    ul li {
-        flex-direction: column;
-        align-items: flex-start;
+    button {
+        font-size: 16px;
+        padding: 8px 15px;
     }
 }

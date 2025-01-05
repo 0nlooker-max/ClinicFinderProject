@@ -71,6 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $pdo->commit();
             echo "Appointment booked successfully!";
+            header("Location: backapointment.php");
+            exit();
         } else {
             echo "Error: Slot is unavailable.";
             $pdo->rollBack(); // Roll back the transaction if the slot is unavailable
@@ -93,6 +95,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Book Appointment</title>
 </head>
 <body>
+    <div class="backbtn">
+    <div class="backbtn">
+    <a href="clinicspage.php?id=<?php echo $clinicId; ?>" class="btn btn-success">Go back</a>
+</div>
+
+    </div>
     <h1>Available Schedules</h1>
     <form method="POST" action="">
         <?php if (!empty($schedules)): ?>
