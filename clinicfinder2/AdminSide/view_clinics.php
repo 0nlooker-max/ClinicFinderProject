@@ -1,5 +1,31 @@
 <?php
+session_start(); // Start session
+
 include '../includes/database.php'; // Include database connection
+
+// Check if user_id is set in session
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if no user_id is in session
+    header("Location: ..\Login\login.php");
+    exit();
+}
+
+// Fetch user details from the database
+try {
+    $stmt = $pdo->prepare("SELECT role FROM user WHERE user_id = :user_id");
+    $stmt->execute(['user_id' => $_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Check if user exists and their role is admin
+    if (!$user || $user['role'] !== 'admin') {
+        // Redirect to an error page if not an admin
+        header("Location: ../error.php");
+        exit();
+    }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    exit();
+}
 
 // Fetch clinics data from the database
 try {
@@ -9,6 +35,7 @@ try {
     echo "Error: " . $e->getMessage();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -167,6 +194,8 @@ try {
                     <li><a href="add_clinic.php">Add Clinic</a></li>
                     <li><a href="view_clinics.php" class="active">View Clinics</a></li>
                     <li><a href="system_reports.php">System Reports</a></li>
+                    <li><a href="..\includes\logout.php">Log Out</a></li>
+
                 </ul>
             </nav>
         </aside>

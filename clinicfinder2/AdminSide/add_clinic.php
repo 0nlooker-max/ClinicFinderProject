@@ -1,6 +1,9 @@
 <?php
 include '../includes/database.php'; // Include database connection
-
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../Login/login.php");
+    exit();
+}
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
@@ -174,6 +177,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li><a href="add_clinic.php" class="active">Add Clinic</a></li>
                     <li><a href="view_clinics.php">View Clinics</a></li>
                     <li><a href="system_reports.php">System Reports</a></li>
+                    <li><a href="..\includes\logout.php">Log Out</a></li>
+
                 </ul>
             </nav>
         </aside>

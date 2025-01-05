@@ -1,6 +1,31 @@
 <?php
-include '../includes/database.php'; // Database connection
+session_start(); // Start session
 
+include '../includes/database.php'; // Include database connection
+
+// Check if user_id is set in session
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if no user_id is in session
+    header("Location: ..\Login\login.php");
+    exit();
+}
+
+// Fetch user details from the database
+try {
+    $stmt = $pdo->prepare("SELECT role FROM user WHERE user_id = :user_id");
+    $stmt->execute(['user_id' => $_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Check if user exists and their role is admin
+    if (!$user || $user['role'] !== 'admin') {
+        // Redirect to an error page if not an admin
+        header("Location: ../error.php");
+        exit();
+    }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    exit();
+}
 // Fetch metrics using the $pdo object
 $totalClinics = $pdo->query("SELECT COUNT(*) AS total FROM clinics")->fetch(PDO::FETCH_ASSOC)['total'];
 $totalUsers = $pdo->query("SELECT COUNT(*) AS total FROM user")->fetch(PDO::FETCH_ASSOC)['total'];
@@ -123,6 +148,8 @@ body, html {
                     <li><a href="add_clinic.php">Add Clinic</a></li>
                     <li><a href="view_clinics.php">View Clinics</a></li>
                     <li><a href="system_reports.php">System Reports</a></li>
+                    <li><a href="..\Login\logout.php">Log Out</a></li>
+
                 </ul>
             </nav>
         </aside>
