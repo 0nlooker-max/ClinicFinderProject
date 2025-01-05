@@ -22,6 +22,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Page</title>
     <link rel="stylesheet" href="..\assets\css\map.css">
+    <link rel="stylesheet" href="..\assets\css\header.css">
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -34,19 +35,9 @@ try {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
 </head>
 <body>
-<div class="header">
-        <nav class="navbar">
-            <div class="logo">
-                <h2>ClinicFinder</h2>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="map.php">Map Page</a></li>
-                <li><a href="about.php">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
+    <?php
+    require_once "..\includes\header.php";
+    ?>
     <!-- Map Section -->
     <div class="map-container">
         <div id="map"></div>

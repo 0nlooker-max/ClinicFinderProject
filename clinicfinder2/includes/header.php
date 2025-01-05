@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/header.css"> <!-- Base CSS file -->
-    
-    <!-- Include specific CSS file only if $specific_css is set -->
-    <?php if (isset($specific_css) && !empty($specific_css)) : ?>
-        <link rel="stylesheet" href="../assets/css/<?php echo $specific_css; ?>">
-    <?php endif; ?>
-    
-    <title>ClinicFinder</title>
-</head>
-<body>
+
 <header>
         <nav class="navbar">
             <div class="logo">

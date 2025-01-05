@@ -88,15 +88,52 @@ body {
     gap: 20px; /* Adds spacing between cards */
 }
 
-.clinic-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    width: 300px; /* Sets a fixed width for each card */
-    flex: 0 1 calc(33.333% - 20px); /* Adjusts cards to fit three per row */
+#search-results {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
 }
+
+.clinic-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.clinic-card img {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.clinic-card h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.clinic-card p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.clinic-card button {
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.clinic-card button:hover {
+    background: #0056b3;
+}
+
 
 footer {
     display: flex;
