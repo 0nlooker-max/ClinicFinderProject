@@ -58,7 +58,7 @@ try {
                                 <p class="card-text">Location: <?= htmlspecialchars($clinic['address']) ?></p>
                                 <p class="card-text">Services: <?= htmlspecialchars($clinic['services']) ?></p>
                                 <p class="card-text">Availability: <?= htmlspecialchars($clinic['availability']) ?></p>
-                                <a href="clinic_details.php?id=<?= $clinic['clinic_id'] ?>" class="btn btn-primary">View Details</a>
+                                <a href="clinicspage.php?id=<?= $clinic['clinic_id'] ?>" class="btn btn-primary">View Details</a>
                             </div>
                         </div>
                     </div>
