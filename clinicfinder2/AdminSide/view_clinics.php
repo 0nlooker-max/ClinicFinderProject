@@ -24,7 +24,7 @@ try {
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>ID</th>`
                     <th>Name</th>
                     <th>Address</th>
                     <th>Contact Info</th>

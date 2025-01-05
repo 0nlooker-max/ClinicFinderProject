@@ -47,7 +47,7 @@ try {
                     <li><a href="index.php">Home</a></li>
                     <li><a href="map.php">Map Page</a></li>
                     <li><a href="about.php">About</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="..\Login\logout.php">LogOut</a></li>
                 </ul>
             </nav>
         </div>
@@ -67,7 +67,7 @@ try {
         <!-- Book Appointment -->
         <div class="appointment-section">
             <h2>Book an Appointment</h2>
-            <a href="book_appointment.php?id=<?php echo $clinicId; ?>" class="appointment-button">Book Appointment</a>
+            <a href="backapointment.php?id=<?php echo $clinicId; ?>" class="appointment-button">Book Appointment</a>
         </div>
     </div>
 

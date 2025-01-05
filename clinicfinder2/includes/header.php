@@ -8,7 +8,7 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="map.php">Map Page</a></li>
                 <li><a href="about.php">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="..\Login\login.php">LogOut</a></li>
             </ul>
         </nav>
-    </header>
+    </header>   

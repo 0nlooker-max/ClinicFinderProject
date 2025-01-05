@@ -1,0 +1,174 @@
+<?php
+require_once "../includes/database.php";
+session_start();
+if (!isset($_SESSION['clinic_id'])) {
+    header("Location: ../Login/login.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Appointments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            flex: 1;
+            margin: 20px auto;
+            max-width: 900px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .accept {
+            background-color: #28a745;
+            color: white;
+        }
+        .decline {
+            background-color: #dc3545;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>ClinicFinder</h1>
+        <div>
+            <a href="dashboard.php">Home</a>
+            <a href="logout.php">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>View Appointments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Appointment ID</th>
+                    <th>Patient Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                try {
+                    $stmt = $pdo->prepare("SELECT * FROM appointment WHERE clinic_id = :clinic_id ORDER BY appointment_date, appointment_time");
+                    $stmt->execute(['clinic_id' => $_SESSION['clinic_id']]);
+
+                    if ($stmt->rowCount() > 0) {
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['appointment_id']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['patient_name']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['appointment_date']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['appointment_time']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['status']) . "</td>";
+                            echo "<td>
+                                    <form action='backapointment.php' method='POST' style='display:inline-block;'>
+                                        <input type='hidden' name='appointment_id' value='" . $row['appointment_id'] . "'>
+                                        <input type='hidden' name='action' value='accept'>
+                                        <button type='submit' class='accept'>Accept</button>
+                                    </form>
+                                    <form action='backapointment.php' method='POST' style='display:inline-block;'>
+                                        <input type='hidden' name='appointment_id' value='" . $row['appointment_id'] . "'>
+                                        <input type='hidden' name='action' value='decline'>
+                                        <button type='submit' class='decline'>Decline</button>
+                                    </form>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6'>No appointments available.</td></tr>";
+                    }
+                } catch (PDOException $e) {
+                    echo "<tr><td colspan='6'>Error: " . $e->getMessage() . "</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2025 ClinicFinder. All Rights Reserved.
+    </div>
+</body>
+</html>
