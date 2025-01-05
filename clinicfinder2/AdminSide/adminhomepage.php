@@ -32,7 +32,7 @@ body, html {
 
 .sidebar {
     width: 250px;
-    background-color: #2c3e50;
+    background-color: #0047AB;
     color: #ecf0f1;
     display: flex;
     flex-direction: column;
@@ -119,7 +119,7 @@ body, html {
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.php">Dashboard</a></li>
+                    <li><a href="adminhomepage.php">Dashboard</a></li>
                     <li><a href="add_clinic.php">Add Clinic</a></li>
                     <li><a href="view_clinics.php">View Clinics</a></li>
                     <li><a href="system_reports.php">System Reports</a></li>

@@ -137,7 +137,7 @@ try {
                         routeWhileDragging: false,
                         addWaypoints: false,
                         lineOptions: {
-                            styles: [{ color: 'red', weight: 4 }]
+                            styles: [{ color: 'blue', weight: 4 }]
                         }
                     }).addTo(map);
                 }
