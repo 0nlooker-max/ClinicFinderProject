@@ -84,22 +84,12 @@ if (!$clinic) {
                     <input type="text" name="address" value="<?= htmlspecialchars($clinic['address']) ?>" required>
                     <input type="text" name="contac_info" value="<?= htmlspecialchars($clinic['contac_info']) ?>" required>
                     <textarea name="services" rows="4"><?= htmlspecialchars($clinic['services']) ?></textarea>
+                    <p>Profile Picture</p>
                     <input type="file" name="image">
                     <button type="submit">Save Changes</button>
                 </form>
             </div>
 
-            <!-- Update Availability Form -->
-            <div id="update-availability" class="form-container">
-                <form action="update_availability.php" method="post">
-                    <h3>Update Availability</h3>
-                    <select name="availability" required>
-                        <option value="Available" <?= $clinic['availability'] === 'Available' ? 'selected' : '' ?>>Available</option>
-                        <option value="Unavailable" <?= $clinic['availability'] === 'Unavailable' ? 'selected' : '' ?>>Unavailable</option>
-                    </select>
-                    <button type="submit">Update</button>
-                </form>
-            </div>
         </div>
     </div>
 
