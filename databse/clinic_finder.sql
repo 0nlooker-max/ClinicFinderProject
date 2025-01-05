@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2025 at 07:46 PM
+-- Generation Time: Jan 05, 2025 at 12:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,21 +38,13 @@ CREATE TABLE `appointment` (
   `clinic_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `availability`
+-- Dumping data for table `appointment`
 --
 
-CREATE TABLE `availability` (
-  `id` int(11) NOT NULL,
-  `clinic_id` int(11) NOT NULL,
-  `day_of_week` varchar(20) NOT NULL,
-  `time_slot` varchar(20) NOT NULL,
-  `slots_available` int(11) NOT NULL CHECK (`slots_available` between 20 and 50),
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `day` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `appointment` (`appointment_id`, `date`, `time`, `status`, `created_at`, `user_id`, `schedule_id`, `clinic_id`) VALUES
+(1, '2025-01-06', '08:00:00', 'pending', '2025-01-05 06:39:38', 3, 1, 6),
+(2, '2024-12-31', '09:00:00', '', '2025-01-05 08:17:38', 3, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -75,8 +67,8 @@ CREATE TABLE `available_schedule` (
 --
 
 INSERT INTO `available_schedule` (`schedule_id`, `date`, `start_time`, `end_time`, `slot_status`, `clinic_id`, `patient_id`) VALUES
-(1, '2025-01-06', '08:00:00', '17:00:00', 'available', 6, NULL),
-(2, '2024-12-31', '09:00:00', '09:30:00', 'available', 6, NULL),
+(1, '2025-01-06', '08:00:00', '17:00:00', 'booked', 6, 3),
+(2, '2024-12-31', '09:00:00', '09:30:00', 'booked', 6, 3),
 (3, '2024-12-31', '09:30:00', '10:00:00', 'available', 6, NULL),
 (4, '2024-12-31', '10:00:00', '10:30:00', 'available', 6, NULL);
 
@@ -134,22 +126,6 @@ INSERT INTO `clinics` (`clinic_id`, `user_id`, `name`, `address`, `latitude`, `i
 -- --------------------------------------------------------
 
 --
--- Table structure for table `clinic_schedules`
---
-
-CREATE TABLE `clinic_schedules` (
-  `schedule_id` int(11) NOT NULL,
-  `clinic_id` int(11) NOT NULL,
-  `day_of_week` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') NOT NULL,
-  `start_time` time NOT NULL,
-  `end_time` time NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `rating`
 --
 
@@ -179,6 +155,21 @@ CREATE TABLE `review` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `system_reports`
+--
+
+CREATE TABLE `system_reports` (
+  `report_id` int(11) NOT NULL,
+  `reported_by` enum('user','clinic') NOT NULL,
+  `reporter_id` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `status` enum('pending','resolved') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -201,7 +192,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `username`, `firstname`, `lastname`, `contact_info`, `facebookacc`, `password`, `email`, `role`, `created_at`) VALUES
 (1, 'admin', 'super', 'admin', '0', 'none', '$2y$10$PI6Rt9EFILXIBHppKq65JufWoD8V.EP.Z8yYUgjpQ82BX8Se/gIdu', 'rex@gmial.com', 'admin', '2025-01-02 19:28:08'),
-(2, 'Bogo clinical Lab', 'syrudia', 'Macasil', '0', 'https://www.facebook.com/bogoclinlab', '$2y$10$tIQPCSvg2ePCI/RjymCRHeCpNMn9Fqrysctcnl7BfuAO9wVvzewyG', 'clinic@gmail.com', 'clinic', '2025-01-02 19:29:29');
+(2, 'Bogo clinical Lab', 'syrudia', 'Macasil', '0', 'https://www.facebook.com/bogoclinlab', '$2y$10$tIQPCSvg2ePCI/RjymCRHeCpNMn9Fqrysctcnl7BfuAO9wVvzewyG', 'clinic@gmail.com', 'clinic', '2025-01-02 19:29:29'),
+(3, 'sfdaf', 'sfaf', 'asff', '', 'afasfa', '$2y$10$g7ZYoJGH2a0FLt4MaaBBK.GZWchtxdOss00lsGLVvI4WYd5AENcU2', 'sdf@D.D', 'patient', '2025-01-05 05:50:42');
 
 --
 -- Indexes for dumped tables
@@ -216,13 +208,6 @@ ALTER TABLE `appointment`
   ADD KEY `idx_user_id` (`user_id`);
 
 --
--- Indexes for table `availability`
---
-ALTER TABLE `availability`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `clinic_id` (`clinic_id`);
-
---
 -- Indexes for table `available_schedule`
 --
 ALTER TABLE `available_schedule`
@@ -235,13 +220,6 @@ ALTER TABLE `available_schedule`
 --
 ALTER TABLE `clinics`
   ADD PRIMARY KEY (`clinic_id`);
-
---
--- Indexes for table `clinic_schedules`
---
-ALTER TABLE `clinic_schedules`
-  ADD PRIMARY KEY (`schedule_id`),
-  ADD KEY `clinic_id` (`clinic_id`);
 
 --
 -- Indexes for table `rating`
@@ -261,6 +239,12 @@ ALTER TABLE `review`
   ADD KEY `clinic_id` (`clinic_id`);
 
 --
+-- Indexes for table `system_reports`
+--
+ALTER TABLE `system_reports`
+  ADD PRIMARY KEY (`report_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -274,13 +258,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `availability`
---
-ALTER TABLE `availability`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `available_schedule`
@@ -295,12 +273,6 @@ ALTER TABLE `clinics`
   MODIFY `clinic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `clinic_schedules`
---
-ALTER TABLE `clinic_schedules`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
@@ -313,10 +285,16 @@ ALTER TABLE `review`
   MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `system_reports`
+--
+ALTER TABLE `system_reports`
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -330,23 +308,11 @@ ALTER TABLE `appointment`
   ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`schedule_id`) REFERENCES `available_schedule` (`schedule_id`);
 
 --
--- Constraints for table `availability`
---
-ALTER TABLE `availability`
-  ADD CONSTRAINT `availability_ibfk_1` FOREIGN KEY (`clinic_id`) REFERENCES `clinics` (`clinic_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `available_schedule`
 --
 ALTER TABLE `available_schedule`
   ADD CONSTRAINT `available_schedule_ibfk_1` FOREIGN KEY (`clinic_id`) REFERENCES `clinics` (`clinic_id`),
   ADD CONSTRAINT `fk_patient` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`) ON DELETE SET NULL;
-
---
--- Constraints for table `clinic_schedules`
---
-ALTER TABLE `clinic_schedules`
-  ADD CONSTRAINT `clinic_schedules_ibfk_1` FOREIGN KEY (`clinic_id`) REFERENCES `clinics` (`clinic_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `rating`

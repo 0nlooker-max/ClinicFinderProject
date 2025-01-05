@@ -1,6 +1,8 @@
 <?php
-require_once "../includes/database.php";
+require_once "../includes/database.php"; // Ensure this file connects to your database using PDO
 session_start();
+
+// Check if clinic is logged in
 if (!isset($_SESSION['clinic_id'])) {
     header("Location: ../Login/login.php");
     exit();
@@ -12,7 +14,7 @@ if (!isset($_SESSION['clinic_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Appointments</title>
+    <title>Appointments</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,7 +59,7 @@ if (!isset($_SESSION['clinic_id'])) {
             width: 250px;
             background-color: #0047AB;
             color: white;
-            height: 100%;
+            height: 35rem;
             padding: 20px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
@@ -147,17 +149,15 @@ if (!isset($_SESSION['clinic_id'])) {
     <!-- Navbar -->
     <div class="navbar">
         <h1>Clinic Management</h1>
-        <div>
-            <a href="dashboard.php">Home</a>
-            <a href="#">Contact</a>
-            <a href="logout.php">Logout</a>
-        </div>
+        <a href="clinicprofile.php">Home</a>
+        <a href="about.php">About</a>
+        <a href="logout.php">Logout</a>
     </div>
 
-    <div class="container">
+    <div class="container"">
         <!-- Sidebar -->
         <div class="side-panel">
-            <h2>Clinic Management</h2>
+            <h2>Menu</h2>
             <a href="clinicprofile.php">Update Profile</a>
             <a href="appointments.php">Appointments</a>
             <a href="availability.php">Manage Availability</a>
@@ -171,7 +171,6 @@ if (!isset($_SESSION['clinic_id'])) {
                 <thead>
                     <tr>
                         <th>Appointment ID</th>
-                        <th>Patient Name</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
@@ -181,36 +180,40 @@ if (!isset($_SESSION['clinic_id'])) {
                 <tbody>
                     <?php
                     try {
-                        $stmt = $pdo->prepare("SELECT * FROM appointment WHERE clinic_id = :clinic_id ORDER BY appointment_date, appointment_time");
+                        $stmt = $pdo->prepare("
+                            SELECT appointment_id, date, time, status 
+                            FROM appointment 
+                            WHERE clinic_id = :clinic_id 
+                            ORDER BY date, time
+                        ");
                         $stmt->execute(['clinic_id' => $_SESSION['clinic_id']]);
 
                         if ($stmt->rowCount() > 0) {
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>";
                                 echo "<td>" . htmlspecialchars($row['appointment_id']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['patient_name']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['appointment_date']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['appointment_time']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['date']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['time']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['status']) . "</td>";
                                 echo "<td>
-                                        <form action='backapointment.php' method='POST' style='display:inline-block;'>
-                                            <input type='hidden' name='appointment_id' value='" . $row['appointment_id'] . "'>
-                                            <input type='hidden' name='action' value='accept'>
-                                            <button type='submit' class='accept'>Accept</button>
-                                        </form>
-                                        <form action='backapointment.php' method='POST' style='display:inline-block;'>
-                                            <input type='hidden' name='appointment_id' value='" . $row['appointment_id'] . "'>
-                                            <input type='hidden' name='action' value='decline'>
-                                            <button type='submit' class='decline'>Decline</button>
-                                        </form>
-                                      </td>";
+                                    <form action='backapointment.php' method='POST' style='display:inline-block;'>
+                                        <input type='hidden' name='appointment_id' value='" . $row['appointment_id'] . "'>
+                                        <input type='hidden' name='action' value='accept'>
+                                        <button type='submit' class='accept'>Accept</button>
+                                    </form>
+                                    <form action='backapointment.php' method='POST' style='display:inline-block;'>
+                                        <input type='hidden' name='appointment_id' value='" . $row['appointment_id'] . "'>
+                                        <input type='hidden' name='action' value='decline'>
+                                        <button type='submit' class='decline'>Decline</button>
+                                    </form>
+                                </td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='6'>No appointments available.</td></tr>";
+                            echo "<tr><td colspan='5'>No appointments available.</td></tr>";
                         }
                     } catch (PDOException $e) {
-                        echo "<tr><td colspan='6'>Error: " . $e->getMessage() . "</td></tr>";
+                        echo "<tr><td colspan='5'>Error: " . $e->getMessage() . "</td></tr>";
                     }
                     ?>
                 </tbody>

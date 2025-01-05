@@ -13,9 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         if ($action === 'accept') {
-            $stmt = $pdo->prepare("UPDATE appointment SET status = 'Accepted' WHERE appointment_id = :appointment_id AND clinic_id = :clinic_id");
+            // Update status to 'confirmed' for accepted appointments
+            $stmt = $pdo->prepare("UPDATE appointment SET status = 'confirmed' WHERE appointment_id = :appointment_id AND clinic_id = :clinic_id");
         } elseif ($action === 'decline') {
-            $stmt = $pdo->prepare("UPDATE appointment SET status = 'Declined' WHERE appointment_id = :appointment_id AND clinic_id = :clinic_id");
+            // Update status to 'cancelled' for declined appointments
+            $stmt = $pdo->prepare("UPDATE appointment SET status = 'cancelled' WHERE appointment_id = :appointment_id AND clinic_id = :clinic_id");
         }
 
         $stmt->execute([
@@ -23,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'clinic_id' => $_SESSION['clinic_id']
         ]);
 
+        // Redirect back to the appointments page
         header("Location: apointment.php");
         exit();
     } catch (PDOException $e) {

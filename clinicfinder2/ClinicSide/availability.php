@@ -59,7 +59,7 @@ if (!isset($_SESSION['clinic_id'])) {
             width: 250px;
             background-color: #0047AB;
             color: white;
-            height: 100%;
+            height: 50rem;
             padding: 20px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }

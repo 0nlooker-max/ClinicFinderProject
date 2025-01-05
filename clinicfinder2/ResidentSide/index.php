@@ -52,7 +52,7 @@ try {
                 <?php foreach ($clinics as $clinic): ?>
                     <div class="col-md-6 col-lg-4 mb-4">
                         <div class="card" style="width: 18rem;">
-                            <img src="../assets/images/clinic-placeholder.jpg" class="card-img-top" alt="Clinic Image">
+                            <img src="" class="card-img-top" alt="Clinic Image">
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($clinic['name']) ?></h5>
                                 <p class="card-text">Location: <?= htmlspecialchars($clinic['address']) ?></p>

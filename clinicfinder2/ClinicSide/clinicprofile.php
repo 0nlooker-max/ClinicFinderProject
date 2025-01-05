@@ -4,6 +4,17 @@ include '../includes/database.php';
 
 session_start();
 
+if (isset($_SESSION['success'])) {
+    echo "<div class='alert alert-success'>" . $_SESSION['success'] . "</div>";
+    unset($_SESSION['success']);
+}
+
+if (isset($_SESSION['error'])) {
+    echo "<div class='alert alert-danger'>" . $_SESSION['error'] . "</div>";
+    unset($_SESSION['error']);
+}
+
+
 // Check if the clinic_id is set in the session
 if (!isset($_SESSION['clinic_id'])) {
     // Redirect to login or handle the error if the clinic_id is not found
@@ -37,9 +48,9 @@ if (!$clinic) {
     <div class="navbar">
         <h1>ClinicFinder</h1>
         <div>
-            <a href="dashboard.php">Home</a>
-            <a href="#">Contact</a>
-            <a href="#">Logout</a>
+            <a href="apointment.php">Home</a>
+            <a href="about.php">About</a>
+            <a href="..\Login\logout.php">Logout</a>
         </div>
     </div>
 
@@ -74,11 +85,10 @@ if (!$clinic) {
             </div>
 
             <a href="#update-profile" class="btn">Update Profile</a>
-            <a href="#update-availability" class="btn">Update Availability</a>
 
             <!-- Update Profile Form -->
             <div id="update-profile" class="form-container">
-                <form action="update_profile.php" method="post" enctype="multipart/form-data">
+                <form action="backCprofile.php" method="post" enctype="multipart/form-data">
                     <h3>Update Profile</h3>
                     <input type="text" name="name" value="<?= htmlspecialchars($clinic['name']) ?>" required>
                     <input type="text" name="address" value="<?= htmlspecialchars($clinic['address']) ?>" required>

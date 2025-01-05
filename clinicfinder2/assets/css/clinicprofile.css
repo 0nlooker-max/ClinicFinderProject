@@ -33,6 +33,7 @@ body {
     text-decoration: underline;
 }
 .container {
+    background-color: #007bff;
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -41,7 +42,7 @@ body {
     width: 250px;
     background-color: #0047AB;
     color: white;
-    height: 100vh;
+    height: 60rem;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
