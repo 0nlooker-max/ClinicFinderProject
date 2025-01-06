@@ -1,9 +1,6 @@
 <?php
 include '../includes/database.php'; // Include database connection
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../Login/login.php");
-    exit();
-}
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];

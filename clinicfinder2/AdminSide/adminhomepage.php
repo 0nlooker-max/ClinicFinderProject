@@ -48,7 +48,9 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
 }
-
+h1{
+    color: #0047AB;
+}
 .main-container {
     display: flex;
     min-height: 100vh;
@@ -71,7 +73,9 @@ body, html {
     text-align: center;
     margin-bottom: 20px;
 }
-
+.sidebar h2{
+    color: aqua;
+}
 .sidebar nav ul {
     list-style: none;
     padding: 0;
