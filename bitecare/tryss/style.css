@@ -1,0 +1,133 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+}
+
+.wrapper {
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #0d6efd;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 0;
+}
+
+.sidebar-header {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.sidebar-header i {
+    margin-right: 10px;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 15px 0;
+}
+
+.menu li a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+.menu li a:hover {
+    background-color: #084298;
+    border-radius: 5px;
+}
+
+.menu-header {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-top: 20px;
+    color: #b8d8ff;
+}
+
+.menu a i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+    border: 2px solid #0d6efd;
+}
+
+/* Dashboard Overview */
+.dashboard-overview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card .icon {
+    font-size: 2rem;
+    color: #0d6efd;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.card p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
